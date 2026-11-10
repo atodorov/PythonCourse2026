@@ -173,3 +173,18 @@ alias gs='git status'
 ```
 
 4. Идеи за alias-и, теми, плъгини и т.н. за `zsh` и `oh-my-zsh` може да почерпите от нечии dotfiles, като например [моите](https://github.com/yalishanda42/dotfiles).
+
+
+## Безплатна книга с упражнения
+
+В интернет съществуват много книги и статии за това как се работи с git, но не всички от тях
+залагат на практически примери и визуализации. Книгата
+[Ry’s Git Tutorial](https://hamwaves.com/collaboration/doc/rypress.com/index.html)
+е напълно безплатна и е пълна с подробни обяснения и практически задачи.
+
+Задачите са сравнително лесни (работи се по HTML сайт) и са подбрани така, че да може
+да се илюстрират различни начини за работа с git!
+
+Например разликата между *merge* и *rebase* е показана визуално
+[тук](https://hamwaves.com/collaboration/doc/rypress.com/branches-2.html) и
+[тук](https://hamwaves.com/collaboration/doc/rypress.com/rebasing.html).
