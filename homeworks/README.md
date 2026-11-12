@@ -78,28 +78,23 @@ Docker е технология, която позволява създаване
 Изпълнете следните две команди, една след друга:
 
 ```bash
-docker pull ghcr.io/fmipython/pygrader:main
-docker run --rm -v <path_to_homework>:/project ghcr.io/fmipython/pygrader:main
+docker pull ghcr.io/fmipython/pygrader:hw1
+docker run --rm -v <path_to_homework>:/tmp/project_bind ghcr.io/fmipython/pygrader:hw1
 ```
 
 `<path_to_homework> е пълния път до директорията, в която се намира вашето решение.`
 
 ```bash
-Python project grader, 1.5.0
-Check: structure, Result: True
-Check: tests, Score: 5.6/5.6
+Python project grader, 2.1.1
+Loading configuration from file: cove://cove.lkarev.org/json_item/3285f50d-29f4-4eb0-b8c9-390b7ccaccf9/config
+Run ID: None, Check: structure, Result: True
+Run ID: None, Check: tests, Score: 1.12/1.12
+Run ID: None, Total Score: 1.12/1.12
 ```
-
-```bash
-Python project grader, 1.5.0
-Check: structure, Result: True
-Check: tests, Score: 5.4/5.6
-```
-
 Ако искате да видите повече информация за резултатите от проверките, може да изпълните командата за изпълнение на контейнера с аргумент `-v`
 
 ```bash
-docker run --rm -v /home/lyubolp/homeworks-2025/homework1:/project ghcr.io/fmipython/pygrader:main -v
+docker run --rm -v /home/lyubolp/homeworks-2025/homework1:/tmp/project_bind ghcr.io/fmipython/pygrader:hw1 -v
 ```
 
 ```bash
