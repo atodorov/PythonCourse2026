@@ -6,30 +6,27 @@ on:
       - main
       - master
       - setup_jupyter_book
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:  # allow manual triggers
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Allow one concurrent deployment
+# Cancel superseded PR builds, but never cancel an in-progress Pages deployment
 concurrency:
-  group: "pages"
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: true
 
 jobs:
-  render:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+  build:
+    # Compile the book on every push and pull request. PRs stop here.
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v4
+
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
@@ -39,14 +36,27 @@ jobs:
         run: |
           jupyter-book build .
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: '_build/html'
-      
+
+  deploy:
+    # Publish only for pushes and manual runs; pull requests never deploy.
+    if: github.event_name != 'pull_request'
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
